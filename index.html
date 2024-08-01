@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 300px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator .display {
+            grid-column: span 4;
+            height: 50px;
+            background-color: #656565;
+            color: white;
+            text-align: right;
+            padding: 10px;
+            font-size: 1.5em;
+            border-radius: 5px;
+        }
+
+        .calculator button {
+            height: 50px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background-color: #171717;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .calculator button:hover {
+            background-color: #61c50952;
+        }
+
+        .calculator button.operator {
+            background-color: #ff9500;
+        }
+
+        .calculator button.operator:hover {
+            background-color: #ffb84d;
+        }
+
+        .calculator button.equal {
+            grid-column: span 2;
+            background-color: #00a0cc;
+        }
+
+        .calculator button.equal:hover {
+            background-color: #00a0cc;
+        }
+
+        .calculator button.clear {
+            background-color: #cc0052;
+        }
+
+        .calculator button.clear:hover {
+            background-color: #cc0052;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button onclick="deleteLast()">DEL</button>
+        <button onclick="appendOperator('/')">/</button>
+        <button onclick="appendOperator('*')">*</button>
+
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button onclick="appendOperator('-')">-</button>
+
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button onclick="appendOperator('+')">+</button>
+
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button onclick="appendNumber('%')">%</button>
+        <button class="equal" onclick="calculateResult()">=</button>
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendNumber('.')">.</button>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendNumber(number) {
+            if (display.innerText === '0') {
+                display.innerText = number;
+            } else {
+                display.innerText += number;
+            }
+        }
+
+        function appendOperator(operator) {
+            const lastChar = display.innerText.slice(-1);
+            if ('+-*/'.includes(lastChar)) {
+                display.innerText = display.innerText.slice(0, -1) + operator;
+            } else {
+                display.innerText += operator;
+            }
+        }
+
+        function clearDisplay() {
+            display.innerText = '0';
+        }
+
+        function deleteLast() {
+            if (display.innerText.length === 1) {
+                display.innerText = '0';
+            } else {
+                display.innerText = display.innerText.slice(0, -1);
+            }
+        }
+
+        function calculateResult() {
+            try {
+                display.innerText = eval(display.innerText);
+            } catch {
+                display.innerText = 'Error';
+            }
+        }
+    </script>
+
+</body>
+</html>
